@@ -1,0 +1,2 @@
+#!/bin/sh
+dmenu_path | dmenu "$@" -l 15 | tee -a $HOME/.cache/dmenu_used | ${SHELL:-"/bin/sh"} &
