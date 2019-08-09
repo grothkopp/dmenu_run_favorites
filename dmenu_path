@@ -1,4 +1,5 @@
 #!/bin/bash
+
 cachedir=${XDG_CACHE_HOME:-"$HOME/.cache"}
 if [ -d "$cachedir" ]; then
 	cache=$cachedir/dmenu_run
@@ -12,7 +13,7 @@ echo '-------------'
 
 IFS=:
 if stest -dqr -n "$cache" ${PATH//:/ }; then
-	stest -flx ${PATH//:/ } | sort -u | tee "$cache" | grep -v $( cat $HOME/.cache/dmenu_used | grep -v '^\-*$' | sort| uniq -c | sort -nr | sed 's/.* //' | head -n 5 )
+	stest -flx ${PATH//:/ } | sort -u | tee "$cache" | grep -v $( cat $HOME/.cache/dmenu_used | grep -v '^\-*$' | sort| uniq -c | sort -nr | sed 's/.* //' | sed 's/$/\$/' | sed 's/^/\^/' | head -n 5 )
 else
-	cat "$cache" | grep -v $( cat $HOME/.cache/dmenu_used | grep -v '^\-*$' | sort | uniq -c | sort -nr | sed 's/.* //' | head -n 5 )
+	cat "$cache" | grep -v $( cat $HOME/.cache/dmenu_used | grep -v '^\-*$' | sort | uniq -c | sort -nr | sed 's/.* //'| sed 's/$/\$/' | sed 's/^/\^/' | head -n 5 )
 fi
